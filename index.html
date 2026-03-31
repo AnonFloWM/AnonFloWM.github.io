@@ -572,7 +572,7 @@
 
 <hr class="section-divider">
 
-<section class="section" id="model-2d">
+<section class="section" id="activation-probe">
   <div class="container is-max-desktop">
 
     <div class="columns is-centered">
@@ -635,6 +635,208 @@
   </div>
 </section>
 
+
+
+
+
+<hr class="section-divider">
+
+<section class="section" id="rssm">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Dreamer V3 RSSM Baseline (New!)</h2>
+
+        <!-- Model diagram -->
+        <div class="content has-text-justified">
+          <p>
+            We present new results on an additional baseline, an RSSM model based on the Dreamer V3 architecture. Two variants are trained, one with 50M parameters and one with 400M
+            parameters, following the description and hyperparameters in the paper. They are trained for 300k steps, the same as the other baselines. In the table below, we can see 
+            that the RSSM model does not do very well, approximately matching the performance of the other baselines. Further, scale improves the quantitative metrics slightly but not 
+            significantly, and perceptually the videos still look quite poor, reinforcing our hypothesis that structured memory is important for solving partially observed dynamic 
+            world modeling problems. 
+          </p>
+        </div>
+
+        <div class="col-auto">
+          <br>
+        <div style="text-align: center;"><img src='./static/images/rssm/rssm_comparison_table.png' style="max-width: 100%; height: auto;" width="700" alt='missing' /></div>
+        </div>
+
+        <div class="toggle-container">
+          <div class="toggle-header" role="button" tabindex="20" aria-expanded="false">
+            <span class="arrow">▶</span>
+            Dreamer V3 RSSM Rollout Visualizations
+          </div>
+          <div class="toggle-content">
+            <div class="content has-text-justified">
+              <p>
+                Rollouts of 70 context frames with 210 generated frames are visualized below for the 50M and 400M RSSM models on the Dynamic Blockworld dataset. We can see that after the 
+                generation period begins, the RSSM model is not able to keep coherent predictions, instead predicting some sort of dataset average. This provides evidence for our 
+                hypothesis that structured memory representations enable better learning for environments such as Blockworld; to compare, see rollouts for FloWM 
+                <a href="#results-3d-blockworld">above.</a>
+              </p>
+            </div>
+
+            <div style="text-align: center; margin-top: 28px">
+              <figure style="text-align:center;">
+                <figcaption style="font-size:20px; font-weight:bold; margin-bottom:8px;">
+                  RSSM 50M Rollout
+                </figcaption>
+                <video
+                  controls
+                  autoplay
+                  muted
+                  loop
+                  width="400"
+                  style="max-width:100%; height:auto;"
+                  src="./static/images/rssm/rssm_50m_rollout.mp4"
+                ></video>
+              </figure>
+            </div>
+
+            <div style="text-align: center; margin-top: 28px">
+              <figure style="text-align:center;">
+                <figcaption style="font-size:20px; font-weight:bold; margin-bottom:8px;">
+                  RSSM 400M Rollout
+                </figcaption>
+                <video
+                  controls
+                  autoplay
+                  muted
+                  loop
+                  width="400"
+                  style="max-width:100%; height:auto;"
+                  src="./static/images/rssm/rssm_400m_rollout.mp4"
+                ></video>
+              </figure>
+            </div>
+
+            
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+<hr class="section-divider">
+
+<section class="section" id="planning">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Blockworld Planning Experiments (New!)</h2>
+
+        <!-- Model diagram -->
+        <div class="content has-text-justified">
+          <p>
+            Figure and Table caption: we present results on downstream planning experiments in the Blockworld environment using the existing pretrained world models. The task is to maximize the amount 
+            of red pixels on the screen, analogous to being as close to the red block (in this experiment there is one of each color) as possible without being on top of it (reward is maximized 
+            at distance of 2 away). We use exhaustive search in an MPC framework with a horizon of 3 and a rollout of length 70 after feeding in 70 observed frames. In total the experiment is run across 
+            8 episodes, requiring no additional trained parameters. 
+            In the figure below, we can see that FloWM quickly finds its way to the red block, while the baselines stay at far away. In the table below we can see that the final absolute distance is 
+            far lower for FloWM compared to the baselines. Example visualizations of the rollouts for each model are also available below.
+          </p>
+        </div>
+
+        <div class="col-auto">
+          <br>
+        <div style="text-align: center;"><img src='./static/images/planning/planning_mpc_comparisons.png' style="max-width: 100%; height: auto;" width="700" alt='missing' /></div>
+        </div>
+
+        <div class="col-auto">
+          <br>
+        <div style="text-align: center;"><img src='./static/images/planning/planning_table.png' style="max-width: 100%; height: auto;" width="700" alt='missing' /></div>
+        </div>
+
+        <div class="toggle-container">
+          <div class="toggle-header" role="button" tabindex="20" aria-expanded="false">
+            <span class="arrow">▶</span>
+            Planning rollout visualizations
+          </div>
+          <div class="toggle-content">
+            <div class="content has-text-justified">
+              <p>
+                Rollouts of the generated 70 frames, for each of the FloWM, DFoT, and DreamerV3 RSSM models, are shown below. We execute the action chosen by the policy in the real environment, 
+                and also in the world model. The real top-down map from the environment simulator after each action is shown on the left, the ground truth next observation from the simulator
+                after the action is taken is shown in the middle, and the generated next observation from the world model is shown on the right. We can see that the baselines may choose 
+                a particular action due to a hallucinated red block or red frame, whereas FloWM stays consistent with its generations throughout the entire trajectory, similar to the pure 
+                generation results. On the top down map, we can see that FloWM learns to follow the red block, while the others perform actions that are deemed good by the world model but 
+                in reality do not maximize the objective. 
+              </p>
+            </div>
+
+            <div style="text-align: center; margin-top: 28px">
+              <figure style="text-align:center;">
+                <figcaption style="font-size:20px; font-weight:bold; margin-bottom:8px;">
+                  FloWM Planning Rollout
+                </figcaption>
+                <video
+                  controls
+                  autoplay
+                  muted
+                  loop
+                  width="600"
+                  style="max-width:100%; height:auto;"
+                  src="./static/images/planning/flowm_merged.mp4"
+                ></video>
+              </figure>
+            </div>
+
+            <div style="text-align: center; margin-top: 28px">
+              <figure style="text-align:center;">
+                <figcaption style="font-size:20px; font-weight:bold; margin-bottom:8px;">
+                  DFoT Planning Rollout
+                </figcaption>
+                <video
+                  controls
+                  autoplay
+                  muted
+                  loop
+                  width="600"
+                  style="max-width:100%; height:auto;"
+                  src="./static/images/planning/dfot_merged.mp4"
+                ></video>
+              </figure>
+            </div>
+
+            <div style="text-align: center; margin-top: 28px">
+              <figure style="text-align:center;">
+                <figcaption style="font-size:20px; font-weight:bold; margin-bottom:8px;">
+                  DreamerV3 RSSM Planning Rollout
+                </figcaption>
+                <video
+                  controls
+                  autoplay
+                  muted
+                  loop
+                  width="600"
+                  style="max-width:100%; height:auto;"
+                  src="./static/images/planning/rssm_merged.mp4"
+                ></video>
+              </figure>
+            </div>
+            
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+  </div>
+</section>
 
 
 
