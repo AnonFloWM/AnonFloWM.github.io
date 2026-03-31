@@ -770,9 +770,8 @@
         <h3 class="title is-4" style="margin-top: 1.5rem;">MPC Planning Algorithm</h3>
         <div class="content" style="margin-top: 1.5rem;">
           <pre style="background: #f5f5f5; padding: 1rem 1.25rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap;"><code>repeat until episode ends:
-  - from the current real context, evaluate many candidate action sequences of length H with the world model
-  - generate predicted future observations for each candidate sequence
-  - compute predicted reward for each imagined rollout
+  - from the current real context, use the world model to generate predicted future observations for many action sequences of length H
+  - compute predicted reward for each imagined rollout (amount of red pixels in the predicted observations)
   - choose the highest-scoring action sequence, and execute the first action in the real environment
   - observe the real next frame and update the model context
   - replan</code>
