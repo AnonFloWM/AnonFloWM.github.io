@@ -1038,20 +1038,83 @@
       </div>
     </div>
 
-    <hr class="section-divider">
-
-
-    <!-- TEMP FIGURE FOR REBUTTALS -->
-<h3 id="baseline-metric" class="title is-4" style="margin-top: 1.5rem; color: red">Additional Figure About Baseline Metric Scores (New!)</h3>
-
-<div class="col-auto">
-  <br>
-<div style="text-align: center;"><img src='./static/images/mse_fig_1_new.png' style="max-width: 100%; height: auto;" width="900" alt='missing' /></div>
-</div>
+    </div>
 
   </div>
 </section>
 
+
+
+
+
+<hr class="section-divider">
+
+<section class="section" id="planning">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3" style="color: red;">FloWM Compute / Memory Analysis (New!)</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            Below we report the compute and memory cost of rollouts with FloWM, DFoT, and DFoT-SSM models. We evaluate each model at batch size 8 on the Dynamic Blockworld Validation
+            set on a single H200 GPU. We evaluate the each model under two different settings: one for one step of autoregressive generation (1 frame), and one for the inference setting 
+            we actually use (70 frames). We report the rollout time in seconds, the throughput, the resident allocated memory (GiB allocated before the generation begins), and the peak 
+            delta (measuring the additional memory allocated during rollout above the resident alloc baseline). We can see that FloWM remains substantially more efficient than the baselines
+            as the sequence length increases, due to the recurrent nature of the model. Importantly, memory usage grows much slower with sequence length than the other baselines.
+          </p>
+        </div>
+
+        <h3 class="title is-5" style="margin-top: 1.5rem;">Sequence length scaling of rollout compute and memory usage</h3>
+
+        <div class="col-auto">
+        <div style="text-align: center;"><img src='./static/images/memory_analysis_diff_models.png' style="max-width: 100%; height: auto;" width="900" alt='missing' /></div>
+        </div>
+
+        <div class="content has-text-justified">
+          <br>
+          <p>
+            The below table reports the difference in memory allocation and rollout time depending on the map and FoV size. The default configuration uses a 33x33 spatial map 
+            and a 60 degree field of view. We can see that map size and FoV have an impact on the Peak Delta, and the throughput, but not the resident alloc; this originates through 
+            difference in the KV and Map update tokens. Through this we can understand the scaling and tradeoff of having a particular size map and FoV. 
+          </p>
+        </div>
+
+        <h3 class="title is-5" style="margin-top: 1.5rem;">Scaling of spatial memory and field of view size in FloWM</h3>
+        <div class="col-auto">
+        <div style="text-align: center;"><img src='./static/images/memory_analysis_map_size.png' style="max-width: 100%; height: auto;" width="900" alt='missing' /></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+<hr class="section-divider">
+
+<section class="section" id="planning">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+
+    <!-- TEMP FIGURE FOR REBUTTALS -->
+    <h3 id="baseline-metric" class="title is-4" style="margin-top: 1.5rem; color: red">Additional Figure About Baseline Metric Scores (New!)</h3>
+
+    <div class="col-auto">
+      <br>
+    <div style="text-align: center;"><img src='./static/images/mse_fig_1_new.png' style="max-width: 100%; height: auto;" width="900" alt='missing' /></div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
 
 
 
