@@ -646,15 +646,16 @@
 
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">Dreamer V3 RSSM Baseline (New!)</h2>
+        <!-- <h2 class="title is-3">Dreamer V3 RSSM Baseline (New!)</h2> -->
+        <h2 class="title is-3" style="color: red;">Dreamer V3 RSSM Baseline (New!)</h2>
 
         <!-- Model diagram -->
         <div class="content has-text-justified">
           <p>
-            We present new results on an additional baseline, an RSSM model based on the Dreamer V3 architecture. Two variants are trained, one with 50M parameters and one with 400M
+            We present new results on an additional baseline, an <strong>RSSM model based on the Dreamer V3 architecture</strong>. Two variants are trained, one with 50M parameters and one with 400M
             parameters, following the description and hyperparameters in the paper. They are trained for 300k steps, the same as the other baselines. In the table below, we can see 
-            that the RSSM model does not do very well, approximately matching the performance of the other baselines. Further, scale improves the quantitative metrics slightly but not 
-            significantly, and perceptually the videos still look quite poor, reinforcing our hypothesis that structured memory is important for solving partially observed dynamic 
+            that the <strong>RSSM model performs poorly</strong>, approximately matching the performance of the other baselines. Further, <strong>model scale improves the quantitative metrics slightly but not 
+            significantly</strong>, and perceptually the videos still look quite poor, reinforcing our hypothesis that structured memory is important for solving partially observed dynamic 
             world modeling problems. 
           </p>
         </div>
@@ -672,8 +673,8 @@
           <div class="toggle-content">
             <div class="content has-text-justified">
               <p>
-                Rollouts of 70 context frames with 210 generated frames are visualized below for the 50M and 400M RSSM models on the Dynamic Blockworld dataset. We can see that after the 
-                generation period begins, the RSSM model is not able to keep coherent predictions, instead predicting some sort of dataset average. This provides evidence for our 
+                Rollouts of 70 context frames with 210 generated frames are visualized below for the 50M and 400M RSSM models on the Dynamic Blockworld dataset. <strong>We can see that after the 
+                generation period begins, the RSSM model is not able to keep coherent predictions</strong>, instead predicting some sort of dataset average. This provides evidence for our 
                 hypothesis that structured memory representations enable better learning for environments such as Blockworld; to compare, see rollouts for FloWM 
                 <a href="#results-3d-blockworld">above.</a>
               </p>
@@ -736,7 +737,8 @@
 
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">Blockworld Planning Experiments (New!)</h2>
+        <!-- <h2 class="title is-3">Blockworld Planning Experiments (New!)</h2> -->
+        <h2 class="title is-3" style="color: red;">Blockworld Planning Experiments (New!)</h2>
 
         <!-- Model diagram -->
         <div class="content has-text-justified">
@@ -758,6 +760,23 @@
         <div class="col-auto">
           <br>
         <div style="text-align: center;"><img src='./static/images/planning/planning_table.png' style="max-width: 100%; height: auto;" width="700" alt='missing' /></div>
+        </div>
+
+        <!-- <div class="col-auto">
+          <br>
+        <div style="text-align: center;"><img src='./static/images/planning/planning_table.png' style="max-width: 100%; height: auto;" width="700" alt='missing' /></div>
+        </div> -->
+
+        <h3 class="title is-4" style="margin-top: 1.5rem;">MPC Planning Algorithm</h3>
+        <div class="content" style="margin-top: 1.5rem;">
+          <pre style="background: #f5f5f5; padding: 1rem 1.25rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap;"><code>repeat until episode ends:
+  - from the current real context, evaluate many candidate action sequences of length H with the world model
+  - generate predicted future observations for each candidate sequence
+  - compute predicted reward for each imagined rollout
+  - choose the highest-scoring action sequence, and execute the first action in the real environment
+  - observe the real next frame and update the model context
+  - replan</code>
+          </pre>
         </div>
 
         <div class="toggle-container">
